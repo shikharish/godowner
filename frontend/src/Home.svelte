@@ -4,8 +4,8 @@
 
   let godowns = [];
   let items = [];
-  let filteredGodowns = [];
-  let searchQuery = "";
+  // let filteredGodowns = [];
+  // let searchQuery = "";
   let selectedItem = null;
   let loading = true;
   let error = null;
@@ -31,8 +31,8 @@
       godowns = await godownsRes.json();
       items = await itemsRes.json();
       // filteredGodowns = godowns;
-      filteredGodowns = getChildren("null"); 
-      console.log(filteredGodowns);
+      // filteredGodowns = getChildren("null");
+      // console.log(filteredGodowns);
     } catch (err) {
       error = err.message;
       console.error("Error fetching data:", err);
@@ -41,32 +41,30 @@
     }
   }
 
-  function filterItems(query) {
-    searchQuery = query.toLowerCase();
+  // function filterItems(query) {
+  //   searchQuery = query.toLowerCase();
 
-    return items.filter((item) =>
-      item.name.toLowerCase().includes(searchQuery)
-    );
-  }
+  //   return items.filter((item) =>
+  //     item.name.toLowerCase().includes(searchQuery)
+  //   );
+  // }
 
-  function findTopmostGodown(godown_id) {
-    if (godown_id === "null") return godown_id;
-    let tmp = godowns.filter((godown) => godown.id === godown_id);
-    findTopmostGodown(tmp[0].parent_godown);
-  }
+  // function findTopmostGodown(godown_id) {
+  //   if (godown_id === "null") return godown_id;
+  //   let tmp = godowns.filter((godown) => godown.id === godown_id);
+  //   findTopmostGodown(tmp[0].parent_godown);
+  // }
 
-  function findTopmostGodowns(filteredItems) {
-    let tmp = [];
-    for (var i = 0; i < filteredItems.length; i++) {
-      tmp.push(findTopmostGodown(filteredItems[i]));
-    }
-    filteredGodowns = [...new Set(tmp)];
-  }
+  // function findTopmostGodowns(filteredItems) {
+  //   let tmp = [];
+  //   for (var i = 0; i < filteredItems.length; i++) {
+  //     tmp.push(findTopmostGodown(filteredItems[i]));
+  //   }
+  //   filteredGodowns = [...new Set(tmp)];
+  // }
 
   function getChildren(parentId) {
-    return godowns.filter(
-      (godown) => godown.parent_godown === parentId
-    );
+    return godowns.filter((godown) => godown.parent_godown === parentId);
   }
 
   function getItems(godownId) {
@@ -77,54 +75,55 @@
     selectedItem = item;
   }
 
-  function handleSearch(event) {
-    const input = event.target;
-    if (input && input.value !== undefined) {
-      findTopmostGodowns(filterItems(input.value));
-    }
-  }
+  // function handleSearch(event) {
+  //   const input = event.target;
+  //   if (input && input.value !== undefined) {
+  //     findTopmostGodowns(filterItems(input.value));
+  //   }
+  // }
 </script>
 
-<div class="container">
+<!-- <div class="container">
   <div class="search-bar">
     <input type="text" placeholder="Search items..." on:input={handleSearch} />
   </div>
-
-  <div class="tree-view">
-    {#if loading}
-      <div class="loading">Loading data...</div>
-    {:else if error}
-      <div class="error">Error: {error}</div>
-    {:else}
-      {#each filteredGodowns as godown}
-        <TreeView children={godown} {getChildren} {getItems} {selectItem} />
-      {/each}
-    {/if}
-  </div>
-
-  <div class="content">
-    {#if selectedItem}
-      <div class="content-container">
-        <h2>{selectedItem.name}</h2>
-        <p><strong>Quantity:</strong> {selectedItem.quantity}</p>
-        <p><strong>Category:</strong> {selectedItem.category}</p>
-        <p><strong>Price:</strong> ₹{selectedItem.price}</p>
-        <p><strong>Status:</strong> {selectedItem.status}</p>
-        <p><strong>Brand:</strong> {selectedItem.brand}</p>
-        <img src={selectedItem.image_url} alt={selectedItem.name} width="400" />
-      </div>
-    {/if}
-  </div>
+ -->
+<div class="tree-view">
+  {#if loading}
+    <div class="loading">Loading data...</div>
+  {:else if error}
+    <div class="error">Error: {error}</div>
+  {:else}
+    {#each getChildren("null") as godown}
+      <TreeView children={godown} {getChildren} {getItems} {selectItem} />
+    {/each}
+  {/if}
 </div>
 
+<div class="content">
+  {#if selectedItem}
+    <div class="content-container">
+      <h2>{selectedItem.name}</h2>
+      <p><strong>Quantity:</strong> {selectedItem.quantity}</p>
+      <p><strong>Category:</strong> {selectedItem.category}</p>
+      <p><strong>Price:</strong> ₹{selectedItem.price}</p>
+      <p><strong>Status:</strong> {selectedItem.status}</p>
+      <p><strong>Brand:</strong> {selectedItem.brand}</p>
+      <img src={selectedItem.image_url} alt={selectedItem.name} width="400" />
+    </div>
+  {/if}
+</div>
+
+<!-- </div> -->
+
 <style>
-  .container {
+  /* .container {
     display: flex;
     height: 100vh;
     overflow: hidden;
-  }
+  } */
 
-  .search-bar {
+  /* .search-bar {
     width: 400px;
     padding: 1rem;
     background-color: #f1f1f1;
@@ -136,13 +135,13 @@
     padding: 0.5rem;
     border: 1px solid #ddd;
     border-radius: 4px;
-  }
+  } */
 
   .tree-view {
     width: 400px;
     position: fixed;
     left: 0;
-    top: 80px; 
+    top: 0px;
     bottom: 0;
     background-color: #f1f1f1;
     border-right: 1px solid #ddd;
