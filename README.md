@@ -1,10 +1,12 @@
+```
 .
-├── backend
-├── frontend
+├── backend/
+├── frontend/
 ├── docker-compose.yml
 ├── README.md
 ├── setup.sql
 └── setup_db.sh
+```
 
 # Godower
 Warehouse management app
