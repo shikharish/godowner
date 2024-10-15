@@ -1,5 +1,8 @@
 # Godower
 Warehouse management app
+- Backend: Golang
+- Frontend: Svelte
+- Database: Sqlite
 
 ## Setup using Docker
 Simply run:
