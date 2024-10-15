@@ -1,3 +1,11 @@
+.
+├── backend
+├── frontend
+├── docker-compose.yml
+├── README.md
+├── setup.sql
+└── setup_db.sh
+
 # Godower
 Warehouse management app
 - Backend: Golang
@@ -39,4 +47,6 @@ Frontend will be started at http://localhost:5173
 
 *New user can also be registered from the Register page.*
 
+---
 
+`setup_db.sh and setup.sql` are scripts to populate db from the json files.
