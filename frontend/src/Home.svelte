@@ -10,7 +10,6 @@
   let loading = true;
   let error = null;
 
-  // Fetch data on mount
   onMount(() => {
     const token = localStorage.getItem("auth_token");
     if (token) {
@@ -32,7 +31,7 @@
       godowns = await godownsRes.json();
       items = await itemsRes.json();
       // filteredGodowns = godowns;
-      filteredGodowns = getChildren("null"); // Initialize with all godowns
+      filteredGodowns = getChildren("null"); 
       console.log(filteredGodowns);
     } catch (err) {
       error = err.message;
@@ -143,7 +142,7 @@
     width: 400px;
     position: fixed;
     left: 0;
-    top: 80px; /* Adjust to fit search bar */
+    top: 80px; 
     bottom: 0;
     background-color: #f1f1f1;
     border-right: 1px solid #ddd;
